@@ -1,0 +1,28 @@
+package ${package_name}.dao.mapper;
+
+import com.glory.mybatis.BaseService;
+import com.glory.mybatis.BaseServiceImpl;
+import ${package_name}.dao.mapper.${model}Mapper;
+import ${package_name}.dao.model.${model};
+import ${package_name}.dao.model.${model}Example;
+import ${package_name}.dao.mapper.${model}Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+* ${model}Service实现
+* Created by glory on ${ctime}.
+*/
+@Service
+@Transactional
+public class ${model}ServiceImpl extends BaseServiceImpl<${model}Mapper, ${model}, ${model}Example> implements ${model}Service {
+
+    private static final Logger logger = LoggerFactory.getLogger(${model}ServiceImpl.class);
+
+    @Autowired
+    private ${model}Mapper ${mapper}Mapper;
+
+}

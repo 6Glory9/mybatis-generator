@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.ad.dao.mapper.AdBusinessMapper">
+  <resultMap id="BaseResultMap" type="mybatis.ad.dao.model.AdBusiness">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="display_name" jdbcType="VARCHAR" property="displayName" />
+    <result column="business_name" jdbcType="VARCHAR" property="businessName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="business_line_id" jdbcType="BIGINT" property="businessLineId" />
+    <result column="business_group_id" jdbcType="BIGINT" property="businessGroupId" />
+    <result column="source_path" jdbcType="VARCHAR" property="sourcePath" />
+    <result column="publish_svn_version" jdbcType="VARCHAR" property="publishSvnVersion" />
+    <result column="project_structure" jdbcType="VARCHAR" property="projectStructure" />
+    <result column="mvn_args" jdbcType="VARCHAR" property="mvnArgs" />
+    <result column="package_repository" jdbcType="VARCHAR" property="packageRepository" />
+    <result column="nginx_config_name" jdbcType="VARCHAR" property="nginxConfigName" />
+    <result column="ng_device_id" jdbcType="BIGINT" property="ngDeviceId" />
+    <result column="construct_type" jdbcType="INTEGER" property="constructType" />
+    <result column="publish_process_id" jdbcType="VARCHAR" property="publishProcessId" />
+    <result column="publish_start_time" jdbcType="TIMESTAMP" property="publishStartTime" />
+    <result column="publish_status" jdbcType="INTEGER" property="publishStatus" />
+    <result column="last_publish" jdbcType="TIMESTAMP" property="lastPublish" />
+    <result column="publish_count" jdbcType="INTEGER" property="publishCount" />
+    <result column="owner_id" jdbcType="BIGINT" property="ownerId" />
+    <result column="designer_id" jdbcType="BIGINT" property="designerId" />
+    <result column="pm_id" jdbcType="BIGINT" property="pmId" />
+    <result column="publisher" jdbcType="VARCHAR" property="publisher" />
+    <result column="chief_audit" jdbcType="VARCHAR" property="chiefAudit" />
+    <result column="design_audit" jdbcType="VARCHAR" property="designAudit" />
+    <result column="devlop_audit" jdbcType="VARCHAR" property="devlopAudit" />
+    <result column="emergency_audit" jdbcType="VARCHAR" property="emergencyAudit" />
+    <result column="information_center_audit" jdbcType="VARCHAR" property="informationCenterAudit" />
+    <result column="operate_audit" jdbcType="VARCHAR" property="operateAudit" />
+    <result column="test_audit" jdbcType="VARCHAR" property="testAudit" />
+    <result column="prerunning_support" jdbcType="BIT" property="prerunningSupport" />
+    <result column="prepub_tester" jdbcType="VARCHAR" property="prepubTester" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_time, update_time, display_name, business_name, description, business_line_id, 
+    business_group_id, source_path, publish_svn_version, project_structure, mvn_args, 
+    package_repository, nginx_config_name, ng_device_id, construct_type, publish_process_id, 
+    publish_start_time, publish_status, last_publish, publish_count, owner_id, designer_id, 
+    pm_id, publisher, chief_audit, design_audit, devlop_audit, emergency_audit, information_center_audit, 
+    operate_audit, test_audit, prerunning_support, prepub_tester
+  </sql>
+  <select id="selectByExample" parameterType="mybatis.ad.dao.model.AdBusinessExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ad_business
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ad_business
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ad_business
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="mybatis.ad.dao.model.AdBusinessExample">
+    delete from ad_business
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="mybatis.ad.dao.model.AdBusiness">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ad_business (create_time, update_time, display_name, 
+      business_name, description, business_line_id, 
+      business_group_id, source_path, publish_svn_version, 
+      project_structure, mvn_args, package_repository, 
+      nginx_config_name, ng_device_id, construct_type, 
+      publish_process_id, publish_start_time, publish_status, 
+      last_publish, publish_count, owner_id, 
+      designer_id, pm_id, publisher, 
+      chief_audit, design_audit, devlop_audit, 
+      emergency_audit, information_center_audit, 
+      operate_audit, test_audit, prerunning_support, 
+      prepub_tester)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{displayName,jdbcType=VARCHAR}, 
+      #{businessName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{businessLineId,jdbcType=BIGINT}, 
+      #{businessGroupId,jdbcType=BIGINT}, #{sourcePath,jdbcType=VARCHAR}, #{publishSvnVersion,jdbcType=VARCHAR}, 
+      #{projectStructure,jdbcType=VARCHAR}, #{mvnArgs,jdbcType=VARCHAR}, #{packageRepository,jdbcType=VARCHAR}, 
+      #{nginxConfigName,jdbcType=VARCHAR}, #{ngDeviceId,jdbcType=BIGINT}, #{constructType,jdbcType=INTEGER}, 
+      #{publishProcessId,jdbcType=VARCHAR}, #{publishStartTime,jdbcType=TIMESTAMP}, #{publishStatus,jdbcType=INTEGER}, 
+      #{lastPublish,jdbcType=TIMESTAMP}, #{publishCount,jdbcType=INTEGER}, #{ownerId,jdbcType=BIGINT}, 
+      #{designerId,jdbcType=BIGINT}, #{pmId,jdbcType=BIGINT}, #{publisher,jdbcType=VARCHAR}, 
+      #{chiefAudit,jdbcType=VARCHAR}, #{designAudit,jdbcType=VARCHAR}, #{devlopAudit,jdbcType=VARCHAR}, 
+      #{emergencyAudit,jdbcType=VARCHAR}, #{informationCenterAudit,jdbcType=VARCHAR}, 
+      #{operateAudit,jdbcType=VARCHAR}, #{testAudit,jdbcType=VARCHAR}, #{prerunningSupport,jdbcType=BIT}, 
+      #{prepubTester,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="mybatis.ad.dao.model.AdBusiness">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ad_business
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="displayName != null">
+        display_name,
+      </if>
+      <if test="businessName != null">
+        business_name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="businessLineId != null">
+        business_line_id,
+      </if>
+      <if test="businessGroupId != null">
+        business_group_id,
+      </if>
+      <if test="sourcePath != null">
+        source_path,
+      </if>
+      <if test="publishSvnVersion != null">
+        publish_svn_version,
+      </if>
+      <if test="projectStructure != null">
+        project_structure,
+      </if>
+      <if test="mvnArgs != null">
+        mvn_args,
+      </if>
+      <if test="packageRepository != null">
+        package_repository,
+      </if>
+      <if test="nginxConfigName != null">
+        nginx_config_name,
+      </if>
+      <if test="ngDeviceId != null">
+        ng_device_id,
+      </if>
+      <if test="constructType != null">
+        construct_type,
+      </if>
+      <if test="publishProcessId != null">
+        publish_process_id,
+      </if>
+      <if test="publishStartTime != null">
+        publish_start_time,
+      </if>
+      <if test="publishStatus != null">
+        publish_status,
+      </if>
+      <if test="lastPublish != null">
+        last_publish,
+      </if>
+      <if test="publishCount != null">
+        publish_count,
+      </if>
+      <if test="ownerId != null">
+        owner_id,
+      </if>
+      <if test="designerId != null">
+        designer_id,
+      </if>
+      <if test="pmId != null">
+        pm_id,
+      </if>
+      <if test="publisher != null">
+        publisher,
+      </if>
+      <if test="chiefAudit != null">
+        chief_audit,
+      </if>
+      <if test="designAudit != null">
+        design_audit,
+      </if>
+      <if test="devlopAudit != null">
+        devlop_audit,
+      </if>
+      <if test="emergencyAudit != null">
+        emergency_audit,
+      </if>
+      <if test="informationCenterAudit != null">
+        information_center_audit,
+      </if>
+      <if test="operateAudit != null">
+        operate_audit,
+      </if>
+      <if test="testAudit != null">
+        test_audit,
+      </if>
+      <if test="prerunningSupport != null">
+        prerunning_support,
+      </if>
+      <if test="prepubTester != null">
+        prepub_tester,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="displayName != null">
+        #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessName != null">
+        #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLineId != null">
+        #{businessLineId,jdbcType=BIGINT},
+      </if>
+      <if test="businessGroupId != null">
+        #{businessGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="sourcePath != null">
+        #{sourcePath,jdbcType=VARCHAR},
+      </if>
+      <if test="publishSvnVersion != null">
+        #{publishSvnVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStructure != null">
+        #{projectStructure,jdbcType=VARCHAR},
+      </if>
+      <if test="mvnArgs != null">
+        #{mvnArgs,jdbcType=VARCHAR},
+      </if>
+      <if test="packageRepository != null">
+        #{packageRepository,jdbcType=VARCHAR},
+      </if>
+      <if test="nginxConfigName != null">
+        #{nginxConfigName,jdbcType=VARCHAR},
+      </if>
+      <if test="ngDeviceId != null">
+        #{ngDeviceId,jdbcType=BIGINT},
+      </if>
+      <if test="constructType != null">
+        #{constructType,jdbcType=INTEGER},
+      </if>
+      <if test="publishProcessId != null">
+        #{publishProcessId,jdbcType=VARCHAR},
+      </if>
+      <if test="publishStartTime != null">
+        #{publishStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishStatus != null">
+        #{publishStatus,jdbcType=INTEGER},
+      </if>
+      <if test="lastPublish != null">
+        #{lastPublish,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishCount != null">
+        #{publishCount,jdbcType=INTEGER},
+      </if>
+      <if test="ownerId != null">
+        #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="designerId != null">
+        #{designerId,jdbcType=BIGINT},
+      </if>
+      <if test="pmId != null">
+        #{pmId,jdbcType=BIGINT},
+      </if>
+      <if test="publisher != null">
+        #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="chiefAudit != null">
+        #{chiefAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="designAudit != null">
+        #{designAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="devlopAudit != null">
+        #{devlopAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyAudit != null">
+        #{emergencyAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="informationCenterAudit != null">
+        #{informationCenterAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="operateAudit != null">
+        #{operateAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="testAudit != null">
+        #{testAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="prerunningSupport != null">
+        #{prerunningSupport,jdbcType=BIT},
+      </if>
+      <if test="prepubTester != null">
+        #{prepubTester,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="mybatis.ad.dao.model.AdBusinessExample" resultType="java.lang.Long">
+    select count(*) from ad_business
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ad_business
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.displayName != null">
+        display_name = #{record.displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessName != null">
+        business_name = #{record.businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessLineId != null">
+        business_line_id = #{record.businessLineId,jdbcType=BIGINT},
+      </if>
+      <if test="record.businessGroupId != null">
+        business_group_id = #{record.businessGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sourcePath != null">
+        source_path = #{record.sourcePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishSvnVersion != null">
+        publish_svn_version = #{record.publishSvnVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectStructure != null">
+        project_structure = #{record.projectStructure,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mvnArgs != null">
+        mvn_args = #{record.mvnArgs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.packageRepository != null">
+        package_repository = #{record.packageRepository,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nginxConfigName != null">
+        nginx_config_name = #{record.nginxConfigName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ngDeviceId != null">
+        ng_device_id = #{record.ngDeviceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.constructType != null">
+        construct_type = #{record.constructType,jdbcType=INTEGER},
+      </if>
+      <if test="record.publishProcessId != null">
+        publish_process_id = #{record.publishProcessId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishStartTime != null">
+        publish_start_time = #{record.publishStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.publishStatus != null">
+        publish_status = #{record.publishStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastPublish != null">
+        last_publish = #{record.lastPublish,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.publishCount != null">
+        publish_count = #{record.publishCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ownerId != null">
+        owner_id = #{record.ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.designerId != null">
+        designer_id = #{record.designerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pmId != null">
+        pm_id = #{record.pmId,jdbcType=BIGINT},
+      </if>
+      <if test="record.publisher != null">
+        publisher = #{record.publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chiefAudit != null">
+        chief_audit = #{record.chiefAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.designAudit != null">
+        design_audit = #{record.designAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.devlopAudit != null">
+        devlop_audit = #{record.devlopAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergencyAudit != null">
+        emergency_audit = #{record.emergencyAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.informationCenterAudit != null">
+        information_center_audit = #{record.informationCenterAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operateAudit != null">
+        operate_audit = #{record.operateAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testAudit != null">
+        test_audit = #{record.testAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prerunningSupport != null">
+        prerunning_support = #{record.prerunningSupport,jdbcType=BIT},
+      </if>
+      <if test="record.prepubTester != null">
+        prepub_tester = #{record.prepubTester,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ad_business
+    set id = #{record.id,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      display_name = #{record.displayName,jdbcType=VARCHAR},
+      business_name = #{record.businessName,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      business_line_id = #{record.businessLineId,jdbcType=BIGINT},
+      business_group_id = #{record.businessGroupId,jdbcType=BIGINT},
+      source_path = #{record.sourcePath,jdbcType=VARCHAR},
+      publish_svn_version = #{record.publishSvnVersion,jdbcType=VARCHAR},
+      project_structure = #{record.projectStructure,jdbcType=VARCHAR},
+      mvn_args = #{record.mvnArgs,jdbcType=VARCHAR},
+      package_repository = #{record.packageRepository,jdbcType=VARCHAR},
+      nginx_config_name = #{record.nginxConfigName,jdbcType=VARCHAR},
+      ng_device_id = #{record.ngDeviceId,jdbcType=BIGINT},
+      construct_type = #{record.constructType,jdbcType=INTEGER},
+      publish_process_id = #{record.publishProcessId,jdbcType=VARCHAR},
+      publish_start_time = #{record.publishStartTime,jdbcType=TIMESTAMP},
+      publish_status = #{record.publishStatus,jdbcType=INTEGER},
+      last_publish = #{record.lastPublish,jdbcType=TIMESTAMP},
+      publish_count = #{record.publishCount,jdbcType=INTEGER},
+      owner_id = #{record.ownerId,jdbcType=BIGINT},
+      designer_id = #{record.designerId,jdbcType=BIGINT},
+      pm_id = #{record.pmId,jdbcType=BIGINT},
+      publisher = #{record.publisher,jdbcType=VARCHAR},
+      chief_audit = #{record.chiefAudit,jdbcType=VARCHAR},
+      design_audit = #{record.designAudit,jdbcType=VARCHAR},
+      devlop_audit = #{record.devlopAudit,jdbcType=VARCHAR},
+      emergency_audit = #{record.emergencyAudit,jdbcType=VARCHAR},
+      information_center_audit = #{record.informationCenterAudit,jdbcType=VARCHAR},
+      operate_audit = #{record.operateAudit,jdbcType=VARCHAR},
+      test_audit = #{record.testAudit,jdbcType=VARCHAR},
+      prerunning_support = #{record.prerunningSupport,jdbcType=BIT},
+      prepub_tester = #{record.prepubTester,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="mybatis.ad.dao.model.AdBusiness">
+    update ad_business
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="displayName != null">
+        display_name = #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="businessName != null">
+        business_name = #{businessName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLineId != null">
+        business_line_id = #{businessLineId,jdbcType=BIGINT},
+      </if>
+      <if test="businessGroupId != null">
+        business_group_id = #{businessGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="sourcePath != null">
+        source_path = #{sourcePath,jdbcType=VARCHAR},
+      </if>
+      <if test="publishSvnVersion != null">
+        publish_svn_version = #{publishSvnVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="projectStructure != null">
+        project_structure = #{projectStructure,jdbcType=VARCHAR},
+      </if>
+      <if test="mvnArgs != null">
+        mvn_args = #{mvnArgs,jdbcType=VARCHAR},
+      </if>
+      <if test="packageRepository != null">
+        package_repository = #{packageRepository,jdbcType=VARCHAR},
+      </if>
+      <if test="nginxConfigName != null">
+        nginx_config_name = #{nginxConfigName,jdbcType=VARCHAR},
+      </if>
+      <if test="ngDeviceId != null">
+        ng_device_id = #{ngDeviceId,jdbcType=BIGINT},
+      </if>
+      <if test="constructType != null">
+        construct_type = #{constructType,jdbcType=INTEGER},
+      </if>
+      <if test="publishProcessId != null">
+        publish_process_id = #{publishProcessId,jdbcType=VARCHAR},
+      </if>
+      <if test="publishStartTime != null">
+        publish_start_time = #{publishStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishStatus != null">
+        publish_status = #{publishStatus,jdbcType=INTEGER},
+      </if>
+      <if test="lastPublish != null">
+        last_publish = #{lastPublish,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishCount != null">
+        publish_count = #{publishCount,jdbcType=INTEGER},
+      </if>
+      <if test="ownerId != null">
+        owner_id = #{ownerId,jdbcType=BIGINT},
+      </if>
+      <if test="designerId != null">
+        designer_id = #{designerId,jdbcType=BIGINT},
+      </if>
+      <if test="pmId != null">
+        pm_id = #{pmId,jdbcType=BIGINT},
+      </if>
+      <if test="publisher != null">
+        publisher = #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="chiefAudit != null">
+        chief_audit = #{chiefAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="designAudit != null">
+        design_audit = #{designAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="devlopAudit != null">
+        devlop_audit = #{devlopAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyAudit != null">
+        emergency_audit = #{emergencyAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="informationCenterAudit != null">
+        information_center_audit = #{informationCenterAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="operateAudit != null">
+        operate_audit = #{operateAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="testAudit != null">
+        test_audit = #{testAudit,jdbcType=VARCHAR},
+      </if>
+      <if test="prerunningSupport != null">
+        prerunning_support = #{prerunningSupport,jdbcType=BIT},
+      </if>
+      <if test="prepubTester != null">
+        prepub_tester = #{prepubTester,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mybatis.ad.dao.model.AdBusiness">
+    update ad_business
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      display_name = #{displayName,jdbcType=VARCHAR},
+      business_name = #{businessName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      business_line_id = #{businessLineId,jdbcType=BIGINT},
+      business_group_id = #{businessGroupId,jdbcType=BIGINT},
+      source_path = #{sourcePath,jdbcType=VARCHAR},
+      publish_svn_version = #{publishSvnVersion,jdbcType=VARCHAR},
+      project_structure = #{projectStructure,jdbcType=VARCHAR},
+      mvn_args = #{mvnArgs,jdbcType=VARCHAR},
+      package_repository = #{packageRepository,jdbcType=VARCHAR},
+      nginx_config_name = #{nginxConfigName,jdbcType=VARCHAR},
+      ng_device_id = #{ngDeviceId,jdbcType=BIGINT},
+      construct_type = #{constructType,jdbcType=INTEGER},
+      publish_process_id = #{publishProcessId,jdbcType=VARCHAR},
+      publish_start_time = #{publishStartTime,jdbcType=TIMESTAMP},
+      publish_status = #{publishStatus,jdbcType=INTEGER},
+      last_publish = #{lastPublish,jdbcType=TIMESTAMP},
+      publish_count = #{publishCount,jdbcType=INTEGER},
+      owner_id = #{ownerId,jdbcType=BIGINT},
+      designer_id = #{designerId,jdbcType=BIGINT},
+      pm_id = #{pmId,jdbcType=BIGINT},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      chief_audit = #{chiefAudit,jdbcType=VARCHAR},
+      design_audit = #{designAudit,jdbcType=VARCHAR},
+      devlop_audit = #{devlopAudit,jdbcType=VARCHAR},
+      emergency_audit = #{emergencyAudit,jdbcType=VARCHAR},
+      information_center_audit = #{informationCenterAudit,jdbcType=VARCHAR},
+      operate_audit = #{operateAudit,jdbcType=VARCHAR},
+      test_audit = #{testAudit,jdbcType=VARCHAR},
+      prerunning_support = #{prerunningSupport,jdbcType=BIT},
+      prepub_tester = #{prepubTester,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

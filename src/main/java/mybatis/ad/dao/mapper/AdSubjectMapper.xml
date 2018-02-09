@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.ad.dao.mapper.AdSubjectMapper">
+  <resultMap id="BaseResultMap" type="mybatis.ad.dao.model.AdSubject">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="display_name" jdbcType="VARCHAR" property="displayName" />
+    <result column="passwd" jdbcType="VARCHAR" property="passwd" />
+    <result column="locked" jdbcType="BIT" property="locked" />
+    <result column="login_failed_time" jdbcType="INTEGER" property="loginFailedTime" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="last_login_date" jdbcType="TIMESTAMP" property="lastLoginDate" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="twice_check_enabled" jdbcType="BIT" property="twiceCheckEnabled" />
+    <result column="twice_check_type" jdbcType="INTEGER" property="twiceCheckType" />
+    <result column="twice_check_code" jdbcType="VARCHAR" property="twiceCheckCode" />
+    <result column="twice_check_label" jdbcType="VARCHAR" property="twiceCheckLabel" />
+    <result column="twice_check_expire_time" jdbcType="TIMESTAMP" property="twiceCheckExpireTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_name, display_name, passwd, locked, login_failed_time, email, department, 
+    position, mobile, last_login_date, create_time, update_time, twice_check_enabled, 
+    twice_check_type, twice_check_code, twice_check_label, twice_check_expire_time
+  </sql>
+  <select id="selectByExample" parameterType="mybatis.ad.dao.model.AdSubjectExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ad_subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ad_subject
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ad_subject
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="mybatis.ad.dao.model.AdSubjectExample">
+    delete from ad_subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="mybatis.ad.dao.model.AdSubject">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ad_subject (user_name, display_name, passwd, 
+      locked, login_failed_time, email, 
+      department, position, mobile, 
+      last_login_date, create_time, update_time, 
+      twice_check_enabled, twice_check_type, twice_check_code, 
+      twice_check_label, twice_check_expire_time
+      )
+    values (#{userName,jdbcType=VARCHAR}, #{displayName,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, 
+      #{locked,jdbcType=BIT}, #{loginFailedTime,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{lastLoginDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{twiceCheckEnabled,jdbcType=BIT}, #{twiceCheckType,jdbcType=INTEGER}, #{twiceCheckCode,jdbcType=VARCHAR}, 
+      #{twiceCheckLabel,jdbcType=VARCHAR}, #{twiceCheckExpireTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="mybatis.ad.dao.model.AdSubject">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ad_subject
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="displayName != null">
+        display_name,
+      </if>
+      <if test="passwd != null">
+        passwd,
+      </if>
+      <if test="locked != null">
+        locked,
+      </if>
+      <if test="loginFailedTime != null">
+        login_failed_time,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="lastLoginDate != null">
+        last_login_date,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="twiceCheckEnabled != null">
+        twice_check_enabled,
+      </if>
+      <if test="twiceCheckType != null">
+        twice_check_type,
+      </if>
+      <if test="twiceCheckCode != null">
+        twice_check_code,
+      </if>
+      <if test="twiceCheckLabel != null">
+        twice_check_label,
+      </if>
+      <if test="twiceCheckExpireTime != null">
+        twice_check_expire_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="displayName != null">
+        #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null">
+        #{locked,jdbcType=BIT},
+      </if>
+      <if test="loginFailedTime != null">
+        #{loginFailedTime,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginDate != null">
+        #{lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="twiceCheckEnabled != null">
+        #{twiceCheckEnabled,jdbcType=BIT},
+      </if>
+      <if test="twiceCheckType != null">
+        #{twiceCheckType,jdbcType=INTEGER},
+      </if>
+      <if test="twiceCheckCode != null">
+        #{twiceCheckCode,jdbcType=VARCHAR},
+      </if>
+      <if test="twiceCheckLabel != null">
+        #{twiceCheckLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="twiceCheckExpireTime != null">
+        #{twiceCheckExpireTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="mybatis.ad.dao.model.AdSubjectExample" resultType="java.lang.Long">
+    select count(*) from ad_subject
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ad_subject
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.displayName != null">
+        display_name = #{record.displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null">
+        passwd = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locked != null">
+        locked = #{record.locked,jdbcType=BIT},
+      </if>
+      <if test="record.loginFailedTime != null">
+        login_failed_time = #{record.loginFailedTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null">
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null">
+        position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastLoginDate != null">
+        last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.twiceCheckEnabled != null">
+        twice_check_enabled = #{record.twiceCheckEnabled,jdbcType=BIT},
+      </if>
+      <if test="record.twiceCheckType != null">
+        twice_check_type = #{record.twiceCheckType,jdbcType=INTEGER},
+      </if>
+      <if test="record.twiceCheckCode != null">
+        twice_check_code = #{record.twiceCheckCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.twiceCheckLabel != null">
+        twice_check_label = #{record.twiceCheckLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.twiceCheckExpireTime != null">
+        twice_check_expire_time = #{record.twiceCheckExpireTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ad_subject
+    set id = #{record.id,jdbcType=BIGINT},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      display_name = #{record.displayName,jdbcType=VARCHAR},
+      passwd = #{record.passwd,jdbcType=VARCHAR},
+      locked = #{record.locked,jdbcType=BIT},
+      login_failed_time = #{record.loginFailedTime,jdbcType=INTEGER},
+      email = #{record.email,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      position = #{record.position,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      last_login_date = #{record.lastLoginDate,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      twice_check_enabled = #{record.twiceCheckEnabled,jdbcType=BIT},
+      twice_check_type = #{record.twiceCheckType,jdbcType=INTEGER},
+      twice_check_code = #{record.twiceCheckCode,jdbcType=VARCHAR},
+      twice_check_label = #{record.twiceCheckLabel,jdbcType=VARCHAR},
+      twice_check_expire_time = #{record.twiceCheckExpireTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="mybatis.ad.dao.model.AdSubject">
+    update ad_subject
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="displayName != null">
+        display_name = #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null">
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null">
+        locked = #{locked,jdbcType=BIT},
+      </if>
+      <if test="loginFailedTime != null">
+        login_failed_time = #{loginFailedTime,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginDate != null">
+        last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="twiceCheckEnabled != null">
+        twice_check_enabled = #{twiceCheckEnabled,jdbcType=BIT},
+      </if>
+      <if test="twiceCheckType != null">
+        twice_check_type = #{twiceCheckType,jdbcType=INTEGER},
+      </if>
+      <if test="twiceCheckCode != null">
+        twice_check_code = #{twiceCheckCode,jdbcType=VARCHAR},
+      </if>
+      <if test="twiceCheckLabel != null">
+        twice_check_label = #{twiceCheckLabel,jdbcType=VARCHAR},
+      </if>
+      <if test="twiceCheckExpireTime != null">
+        twice_check_expire_time = #{twiceCheckExpireTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mybatis.ad.dao.model.AdSubject">
+    update ad_subject
+    set user_name = #{userName,jdbcType=VARCHAR},
+      display_name = #{displayName,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR},
+      locked = #{locked,jdbcType=BIT},
+      login_failed_time = #{loginFailedTime,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      twice_check_enabled = #{twiceCheckEnabled,jdbcType=BIT},
+      twice_check_type = #{twiceCheckType,jdbcType=INTEGER},
+      twice_check_code = #{twiceCheckCode,jdbcType=VARCHAR},
+      twice_check_label = #{twiceCheckLabel,jdbcType=VARCHAR},
+      twice_check_expire_time = #{twiceCheckExpireTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

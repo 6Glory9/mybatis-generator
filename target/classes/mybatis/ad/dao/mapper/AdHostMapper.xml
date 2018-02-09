@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.ad.dao.mapper.AdHostMapper">
+  <resultMap id="BaseResultMap" type="mybatis.ad.dao.model.AdHost">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="backup_dir" jdbcType="VARCHAR" property="backupDir" />
+    <result column="host_ip" jdbcType="VARCHAR" property="hostIp" />
+    <result column="host_name" jdbcType="VARCHAR" property="hostName" />
+    <result column="os_type" jdbcType="INTEGER" property="osType" />
+    <result column="protected_dir" jdbcType="VARCHAR" property="protectedDir" />
+    <result column="ssh_username" jdbcType="VARCHAR" property="sshUsername" />
+    <result column="ssh_password" jdbcType="VARCHAR" property="sshPassword" />
+    <result column="ssh_port" jdbcType="VARCHAR" property="sshPort" />
+    <result column="idc_id" jdbcType="BIGINT" property="idcId" />
+    <result column="host_tag" jdbcType="BIGINT" property="hostTag" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_time, update_time, backup_dir, host_ip, host_name, os_type, protected_dir, 
+    ssh_username, ssh_password, ssh_port, idc_id, host_tag, status
+  </sql>
+  <select id="selectByExample" parameterType="mybatis.ad.dao.model.AdHostExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ad_host
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ad_host
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ad_host
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="mybatis.ad.dao.model.AdHostExample">
+    delete from ad_host
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="mybatis.ad.dao.model.AdHost">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ad_host (create_time, update_time, backup_dir, 
+      host_ip, host_name, os_type, 
+      protected_dir, ssh_username, ssh_password, 
+      ssh_port, idc_id, host_tag, 
+      status)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{backupDir,jdbcType=VARCHAR}, 
+      #{hostIp,jdbcType=VARCHAR}, #{hostName,jdbcType=VARCHAR}, #{osType,jdbcType=INTEGER}, 
+      #{protectedDir,jdbcType=VARCHAR}, #{sshUsername,jdbcType=VARCHAR}, #{sshPassword,jdbcType=VARCHAR}, 
+      #{sshPort,jdbcType=VARCHAR}, #{idcId,jdbcType=BIGINT}, #{hostTag,jdbcType=BIGINT}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="mybatis.ad.dao.model.AdHost">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ad_host
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="backupDir != null">
+        backup_dir,
+      </if>
+      <if test="hostIp != null">
+        host_ip,
+      </if>
+      <if test="hostName != null">
+        host_name,
+      </if>
+      <if test="osType != null">
+        os_type,
+      </if>
+      <if test="protectedDir != null">
+        protected_dir,
+      </if>
+      <if test="sshUsername != null">
+        ssh_username,
+      </if>
+      <if test="sshPassword != null">
+        ssh_password,
+      </if>
+      <if test="sshPort != null">
+        ssh_port,
+      </if>
+      <if test="idcId != null">
+        idc_id,
+      </if>
+      <if test="hostTag != null">
+        host_tag,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backupDir != null">
+        #{backupDir,jdbcType=VARCHAR},
+      </if>
+      <if test="hostIp != null">
+        #{hostIp,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null">
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="osType != null">
+        #{osType,jdbcType=INTEGER},
+      </if>
+      <if test="protectedDir != null">
+        #{protectedDir,jdbcType=VARCHAR},
+      </if>
+      <if test="sshUsername != null">
+        #{sshUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="sshPassword != null">
+        #{sshPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="sshPort != null">
+        #{sshPort,jdbcType=VARCHAR},
+      </if>
+      <if test="idcId != null">
+        #{idcId,jdbcType=BIGINT},
+      </if>
+      <if test="hostTag != null">
+        #{hostTag,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="mybatis.ad.dao.model.AdHostExample" resultType="java.lang.Long">
+    select count(*) from ad_host
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ad_host
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.backupDir != null">
+        backup_dir = #{record.backupDir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hostIp != null">
+        host_ip = #{record.hostIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hostName != null">
+        host_name = #{record.hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osType != null">
+        os_type = #{record.osType,jdbcType=INTEGER},
+      </if>
+      <if test="record.protectedDir != null">
+        protected_dir = #{record.protectedDir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sshUsername != null">
+        ssh_username = #{record.sshUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sshPassword != null">
+        ssh_password = #{record.sshPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sshPort != null">
+        ssh_port = #{record.sshPort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcId != null">
+        idc_id = #{record.idcId,jdbcType=BIGINT},
+      </if>
+      <if test="record.hostTag != null">
+        host_tag = #{record.hostTag,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ad_host
+    set id = #{record.id,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      backup_dir = #{record.backupDir,jdbcType=VARCHAR},
+      host_ip = #{record.hostIp,jdbcType=VARCHAR},
+      host_name = #{record.hostName,jdbcType=VARCHAR},
+      os_type = #{record.osType,jdbcType=INTEGER},
+      protected_dir = #{record.protectedDir,jdbcType=VARCHAR},
+      ssh_username = #{record.sshUsername,jdbcType=VARCHAR},
+      ssh_password = #{record.sshPassword,jdbcType=VARCHAR},
+      ssh_port = #{record.sshPort,jdbcType=VARCHAR},
+      idc_id = #{record.idcId,jdbcType=BIGINT},
+      host_tag = #{record.hostTag,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="mybatis.ad.dao.model.AdHost">
+    update ad_host
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backupDir != null">
+        backup_dir = #{backupDir,jdbcType=VARCHAR},
+      </if>
+      <if test="hostIp != null">
+        host_ip = #{hostIp,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null">
+        host_name = #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="osType != null">
+        os_type = #{osType,jdbcType=INTEGER},
+      </if>
+      <if test="protectedDir != null">
+        protected_dir = #{protectedDir,jdbcType=VARCHAR},
+      </if>
+      <if test="sshUsername != null">
+        ssh_username = #{sshUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="sshPassword != null">
+        ssh_password = #{sshPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="sshPort != null">
+        ssh_port = #{sshPort,jdbcType=VARCHAR},
+      </if>
+      <if test="idcId != null">
+        idc_id = #{idcId,jdbcType=BIGINT},
+      </if>
+      <if test="hostTag != null">
+        host_tag = #{hostTag,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mybatis.ad.dao.model.AdHost">
+    update ad_host
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      backup_dir = #{backupDir,jdbcType=VARCHAR},
+      host_ip = #{hostIp,jdbcType=VARCHAR},
+      host_name = #{hostName,jdbcType=VARCHAR},
+      os_type = #{osType,jdbcType=INTEGER},
+      protected_dir = #{protectedDir,jdbcType=VARCHAR},
+      ssh_username = #{sshUsername,jdbcType=VARCHAR},
+      ssh_password = #{sshPassword,jdbcType=VARCHAR},
+      ssh_port = #{sshPort,jdbcType=VARCHAR},
+      idc_id = #{idcId,jdbcType=BIGINT},
+      host_tag = #{hostTag,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>

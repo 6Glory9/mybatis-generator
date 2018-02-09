@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.ad.dao.mapper.AdApplicationServerMapper">
+  <resultMap id="BaseResultMap" type="mybatis.ad.dao.model.AdApplicationServer">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="server_name" jdbcType="VARCHAR" property="serverName" />
+    <result column="environment_type" jdbcType="INTEGER" property="environmentType" />
+    <result column="is_standby" jdbcType="BIT" property="isStandby" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="home_dir" jdbcType="VARCHAR" property="homeDir" />
+    <result column="access_log" jdbcType="VARCHAR" property="accessLog" />
+    <result column="log_dir_path" jdbcType="VARCHAR" property="logDirPath" />
+    <result column="apps_dir_path" jdbcType="VARCHAR" property="appsDirPath" />
+    <result column="config_dir_path" jdbcType="VARCHAR" property="configDirPath" />
+    <result column="customer_start_script" jdbcType="VARCHAR" property="customerStartScript" />
+    <result column="customer_stop_script" jdbcType="VARCHAR" property="customerStopScript" />
+    <result column="customer_dump_script" jdbcType="VARCHAR" property="customerDumpScript" />
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="server_type" jdbcType="INTEGER" property="serverType" />
+    <result column="server_version" jdbcType="VARCHAR" property="serverVersion" />
+    <result column="http_port" jdbcType="INTEGER" property="httpPort" />
+    <result column="httpsPort" jdbcType="INTEGER" property="httpsport" />
+    <result column="ajp_port" jdbcType="INTEGER" property="ajpPort" />
+    <result column="jmx_port" jdbcType="INTEGER" property="jmxPort" />
+    <result column="shutdown_port" jdbcType="INTEGER" property="shutdownPort" />
+    <result column="dubbo_port" jdbcType="INTEGER" property="dubboPort" />
+    <result column="java_heap_size" jdbcType="INTEGER" property="javaHeapSize" />
+    <result column="env" jdbcType="VARCHAR" property="env" />
+    <result column="host_id" jdbcType="BIGINT" property="hostId" />
+    <result column="host_ip" jdbcType="VARCHAR" property="hostIp" />
+    <result column="running_version" jdbcType="VARCHAR" property="runningVersion" />
+    <result column="app_file_update_time" jdbcType="TIMESTAMP" property="appFileUpdateTime" />
+    <result column="synchronize_status" jdbcType="INTEGER" property="synchronizeStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_time, update_time, server_name, environment_type, is_standby, description, 
+    home_dir, access_log, log_dir_path, apps_dir_path, config_dir_path, customer_start_script, 
+    customer_stop_script, customer_dump_script, group_name, user_name, server_type, server_version, 
+    http_port, httpsPort, ajp_port, jmx_port, shutdown_port, dubbo_port, java_heap_size, 
+    env, host_id, host_ip, running_version, app_file_update_time, synchronize_status
+  </sql>
+  <select id="selectByExample" parameterType="mybatis.ad.dao.model.AdApplicationServerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ad_application_server
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ad_application_server
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ad_application_server
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="mybatis.ad.dao.model.AdApplicationServerExample">
+    delete from ad_application_server
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="mybatis.ad.dao.model.AdApplicationServer">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ad_application_server (create_time, update_time, server_name, 
+      environment_type, is_standby, description, 
+      home_dir, access_log, log_dir_path, 
+      apps_dir_path, config_dir_path, customer_start_script, 
+      customer_stop_script, customer_dump_script, 
+      group_name, user_name, server_type, 
+      server_version, http_port, httpsPort, 
+      ajp_port, jmx_port, shutdown_port, 
+      dubbo_port, java_heap_size, env, 
+      host_id, host_ip, running_version, 
+      app_file_update_time, synchronize_status)
+    values (#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{serverName,jdbcType=VARCHAR}, 
+      #{environmentType,jdbcType=INTEGER}, #{isStandby,jdbcType=BIT}, #{description,jdbcType=VARCHAR}, 
+      #{homeDir,jdbcType=VARCHAR}, #{accessLog,jdbcType=VARCHAR}, #{logDirPath,jdbcType=VARCHAR}, 
+      #{appsDirPath,jdbcType=VARCHAR}, #{configDirPath,jdbcType=VARCHAR}, #{customerStartScript,jdbcType=VARCHAR}, 
+      #{customerStopScript,jdbcType=VARCHAR}, #{customerDumpScript,jdbcType=VARCHAR}, 
+      #{groupName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{serverType,jdbcType=INTEGER}, 
+      #{serverVersion,jdbcType=VARCHAR}, #{httpPort,jdbcType=INTEGER}, #{httpsport,jdbcType=INTEGER}, 
+      #{ajpPort,jdbcType=INTEGER}, #{jmxPort,jdbcType=INTEGER}, #{shutdownPort,jdbcType=INTEGER}, 
+      #{dubboPort,jdbcType=INTEGER}, #{javaHeapSize,jdbcType=INTEGER}, #{env,jdbcType=VARCHAR}, 
+      #{hostId,jdbcType=BIGINT}, #{hostIp,jdbcType=VARCHAR}, #{runningVersion,jdbcType=VARCHAR}, 
+      #{appFileUpdateTime,jdbcType=TIMESTAMP}, #{synchronizeStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="mybatis.ad.dao.model.AdApplicationServer">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ad_application_server
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="serverName != null">
+        server_name,
+      </if>
+      <if test="environmentType != null">
+        environment_type,
+      </if>
+      <if test="isStandby != null">
+        is_standby,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="homeDir != null">
+        home_dir,
+      </if>
+      <if test="accessLog != null">
+        access_log,
+      </if>
+      <if test="logDirPath != null">
+        log_dir_path,
+      </if>
+      <if test="appsDirPath != null">
+        apps_dir_path,
+      </if>
+      <if test="configDirPath != null">
+        config_dir_path,
+      </if>
+      <if test="customerStartScript != null">
+        customer_start_script,
+      </if>
+      <if test="customerStopScript != null">
+        customer_stop_script,
+      </if>
+      <if test="customerDumpScript != null">
+        customer_dump_script,
+      </if>
+      <if test="groupName != null">
+        group_name,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="serverType != null">
+        server_type,
+      </if>
+      <if test="serverVersion != null">
+        server_version,
+      </if>
+      <if test="httpPort != null">
+        http_port,
+      </if>
+      <if test="httpsport != null">
+        httpsPort,
+      </if>
+      <if test="ajpPort != null">
+        ajp_port,
+      </if>
+      <if test="jmxPort != null">
+        jmx_port,
+      </if>
+      <if test="shutdownPort != null">
+        shutdown_port,
+      </if>
+      <if test="dubboPort != null">
+        dubbo_port,
+      </if>
+      <if test="javaHeapSize != null">
+        java_heap_size,
+      </if>
+      <if test="env != null">
+        env,
+      </if>
+      <if test="hostId != null">
+        host_id,
+      </if>
+      <if test="hostIp != null">
+        host_ip,
+      </if>
+      <if test="runningVersion != null">
+        running_version,
+      </if>
+      <if test="appFileUpdateTime != null">
+        app_file_update_time,
+      </if>
+      <if test="synchronizeStatus != null">
+        synchronize_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serverName != null">
+        #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="environmentType != null">
+        #{environmentType,jdbcType=INTEGER},
+      </if>
+      <if test="isStandby != null">
+        #{isStandby,jdbcType=BIT},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="homeDir != null">
+        #{homeDir,jdbcType=VARCHAR},
+      </if>
+      <if test="accessLog != null">
+        #{accessLog,jdbcType=VARCHAR},
+      </if>
+      <if test="logDirPath != null">
+        #{logDirPath,jdbcType=VARCHAR},
+      </if>
+      <if test="appsDirPath != null">
+        #{appsDirPath,jdbcType=VARCHAR},
+      </if>
+      <if test="configDirPath != null">
+        #{configDirPath,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStartScript != null">
+        #{customerStartScript,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStopScript != null">
+        #{customerStopScript,jdbcType=VARCHAR},
+      </if>
+      <if test="customerDumpScript != null">
+        #{customerDumpScript,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="serverType != null">
+        #{serverType,jdbcType=INTEGER},
+      </if>
+      <if test="serverVersion != null">
+        #{serverVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="httpPort != null">
+        #{httpPort,jdbcType=INTEGER},
+      </if>
+      <if test="httpsport != null">
+        #{httpsport,jdbcType=INTEGER},
+      </if>
+      <if test="ajpPort != null">
+        #{ajpPort,jdbcType=INTEGER},
+      </if>
+      <if test="jmxPort != null">
+        #{jmxPort,jdbcType=INTEGER},
+      </if>
+      <if test="shutdownPort != null">
+        #{shutdownPort,jdbcType=INTEGER},
+      </if>
+      <if test="dubboPort != null">
+        #{dubboPort,jdbcType=INTEGER},
+      </if>
+      <if test="javaHeapSize != null">
+        #{javaHeapSize,jdbcType=INTEGER},
+      </if>
+      <if test="env != null">
+        #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="hostId != null">
+        #{hostId,jdbcType=BIGINT},
+      </if>
+      <if test="hostIp != null">
+        #{hostIp,jdbcType=VARCHAR},
+      </if>
+      <if test="runningVersion != null">
+        #{runningVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="appFileUpdateTime != null">
+        #{appFileUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="synchronizeStatus != null">
+        #{synchronizeStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="mybatis.ad.dao.model.AdApplicationServerExample" resultType="java.lang.Long">
+    select count(*) from ad_application_server
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ad_application_server
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.serverName != null">
+        server_name = #{record.serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.environmentType != null">
+        environment_type = #{record.environmentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.isStandby != null">
+        is_standby = #{record.isStandby,jdbcType=BIT},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homeDir != null">
+        home_dir = #{record.homeDir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accessLog != null">
+        access_log = #{record.accessLog,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logDirPath != null">
+        log_dir_path = #{record.logDirPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appsDirPath != null">
+        apps_dir_path = #{record.appsDirPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.configDirPath != null">
+        config_dir_path = #{record.configDirPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerStartScript != null">
+        customer_start_script = #{record.customerStartScript,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerStopScript != null">
+        customer_stop_script = #{record.customerStopScript,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerDumpScript != null">
+        customer_dump_script = #{record.customerDumpScript,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupName != null">
+        group_name = #{record.groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serverType != null">
+        server_type = #{record.serverType,jdbcType=INTEGER},
+      </if>
+      <if test="record.serverVersion != null">
+        server_version = #{record.serverVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.httpPort != null">
+        http_port = #{record.httpPort,jdbcType=INTEGER},
+      </if>
+      <if test="record.httpsport != null">
+        httpsPort = #{record.httpsport,jdbcType=INTEGER},
+      </if>
+      <if test="record.ajpPort != null">
+        ajp_port = #{record.ajpPort,jdbcType=INTEGER},
+      </if>
+      <if test="record.jmxPort != null">
+        jmx_port = #{record.jmxPort,jdbcType=INTEGER},
+      </if>
+      <if test="record.shutdownPort != null">
+        shutdown_port = #{record.shutdownPort,jdbcType=INTEGER},
+      </if>
+      <if test="record.dubboPort != null">
+        dubbo_port = #{record.dubboPort,jdbcType=INTEGER},
+      </if>
+      <if test="record.javaHeapSize != null">
+        java_heap_size = #{record.javaHeapSize,jdbcType=INTEGER},
+      </if>
+      <if test="record.env != null">
+        env = #{record.env,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hostId != null">
+        host_id = #{record.hostId,jdbcType=BIGINT},
+      </if>
+      <if test="record.hostIp != null">
+        host_ip = #{record.hostIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.runningVersion != null">
+        running_version = #{record.runningVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appFileUpdateTime != null">
+        app_file_update_time = #{record.appFileUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.synchronizeStatus != null">
+        synchronize_status = #{record.synchronizeStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ad_application_server
+    set id = #{record.id,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      server_name = #{record.serverName,jdbcType=VARCHAR},
+      environment_type = #{record.environmentType,jdbcType=INTEGER},
+      is_standby = #{record.isStandby,jdbcType=BIT},
+      description = #{record.description,jdbcType=VARCHAR},
+      home_dir = #{record.homeDir,jdbcType=VARCHAR},
+      access_log = #{record.accessLog,jdbcType=VARCHAR},
+      log_dir_path = #{record.logDirPath,jdbcType=VARCHAR},
+      apps_dir_path = #{record.appsDirPath,jdbcType=VARCHAR},
+      config_dir_path = #{record.configDirPath,jdbcType=VARCHAR},
+      customer_start_script = #{record.customerStartScript,jdbcType=VARCHAR},
+      customer_stop_script = #{record.customerStopScript,jdbcType=VARCHAR},
+      customer_dump_script = #{record.customerDumpScript,jdbcType=VARCHAR},
+      group_name = #{record.groupName,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      server_type = #{record.serverType,jdbcType=INTEGER},
+      server_version = #{record.serverVersion,jdbcType=VARCHAR},
+      http_port = #{record.httpPort,jdbcType=INTEGER},
+      httpsPort = #{record.httpsport,jdbcType=INTEGER},
+      ajp_port = #{record.ajpPort,jdbcType=INTEGER},
+      jmx_port = #{record.jmxPort,jdbcType=INTEGER},
+      shutdown_port = #{record.shutdownPort,jdbcType=INTEGER},
+      dubbo_port = #{record.dubboPort,jdbcType=INTEGER},
+      java_heap_size = #{record.javaHeapSize,jdbcType=INTEGER},
+      env = #{record.env,jdbcType=VARCHAR},
+      host_id = #{record.hostId,jdbcType=BIGINT},
+      host_ip = #{record.hostIp,jdbcType=VARCHAR},
+      running_version = #{record.runningVersion,jdbcType=VARCHAR},
+      app_file_update_time = #{record.appFileUpdateTime,jdbcType=TIMESTAMP},
+      synchronize_status = #{record.synchronizeStatus,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="mybatis.ad.dao.model.AdApplicationServer">
+    update ad_application_server
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serverName != null">
+        server_name = #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="environmentType != null">
+        environment_type = #{environmentType,jdbcType=INTEGER},
+      </if>
+      <if test="isStandby != null">
+        is_standby = #{isStandby,jdbcType=BIT},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="homeDir != null">
+        home_dir = #{homeDir,jdbcType=VARCHAR},
+      </if>
+      <if test="accessLog != null">
+        access_log = #{accessLog,jdbcType=VARCHAR},
+      </if>
+      <if test="logDirPath != null">
+        log_dir_path = #{logDirPath,jdbcType=VARCHAR},
+      </if>
+      <if test="appsDirPath != null">
+        apps_dir_path = #{appsDirPath,jdbcType=VARCHAR},
+      </if>
+      <if test="configDirPath != null">
+        config_dir_path = #{configDirPath,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStartScript != null">
+        customer_start_script = #{customerStartScript,jdbcType=VARCHAR},
+      </if>
+      <if test="customerStopScript != null">
+        customer_stop_script = #{customerStopScript,jdbcType=VARCHAR},
+      </if>
+      <if test="customerDumpScript != null">
+        customer_dump_script = #{customerDumpScript,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="serverType != null">
+        server_type = #{serverType,jdbcType=INTEGER},
+      </if>
+      <if test="serverVersion != null">
+        server_version = #{serverVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="httpPort != null">
+        http_port = #{httpPort,jdbcType=INTEGER},
+      </if>
+      <if test="httpsport != null">
+        httpsPort = #{httpsport,jdbcType=INTEGER},
+      </if>
+      <if test="ajpPort != null">
+        ajp_port = #{ajpPort,jdbcType=INTEGER},
+      </if>
+      <if test="jmxPort != null">
+        jmx_port = #{jmxPort,jdbcType=INTEGER},
+      </if>
+      <if test="shutdownPort != null">
+        shutdown_port = #{shutdownPort,jdbcType=INTEGER},
+      </if>
+      <if test="dubboPort != null">
+        dubbo_port = #{dubboPort,jdbcType=INTEGER},
+      </if>
+      <if test="javaHeapSize != null">
+        java_heap_size = #{javaHeapSize,jdbcType=INTEGER},
+      </if>
+      <if test="env != null">
+        env = #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="hostId != null">
+        host_id = #{hostId,jdbcType=BIGINT},
+      </if>
+      <if test="hostIp != null">
+        host_ip = #{hostIp,jdbcType=VARCHAR},
+      </if>
+      <if test="runningVersion != null">
+        running_version = #{runningVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="appFileUpdateTime != null">
+        app_file_update_time = #{appFileUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="synchronizeStatus != null">
+        synchronize_status = #{synchronizeStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="mybatis.ad.dao.model.AdApplicationServer">
+    update ad_application_server
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      server_name = #{serverName,jdbcType=VARCHAR},
+      environment_type = #{environmentType,jdbcType=INTEGER},
+      is_standby = #{isStandby,jdbcType=BIT},
+      description = #{description,jdbcType=VARCHAR},
+      home_dir = #{homeDir,jdbcType=VARCHAR},
+      access_log = #{accessLog,jdbcType=VARCHAR},
+      log_dir_path = #{logDirPath,jdbcType=VARCHAR},
+      apps_dir_path = #{appsDirPath,jdbcType=VARCHAR},
+      config_dir_path = #{configDirPath,jdbcType=VARCHAR},
+      customer_start_script = #{customerStartScript,jdbcType=VARCHAR},
+      customer_stop_script = #{customerStopScript,jdbcType=VARCHAR},
+      customer_dump_script = #{customerDumpScript,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      server_type = #{serverType,jdbcType=INTEGER},
+      server_version = #{serverVersion,jdbcType=VARCHAR},
+      http_port = #{httpPort,jdbcType=INTEGER},
+      httpsPort = #{httpsport,jdbcType=INTEGER},
+      ajp_port = #{ajpPort,jdbcType=INTEGER},
+      jmx_port = #{jmxPort,jdbcType=INTEGER},
+      shutdown_port = #{shutdownPort,jdbcType=INTEGER},
+      dubbo_port = #{dubboPort,jdbcType=INTEGER},
+      java_heap_size = #{javaHeapSize,jdbcType=INTEGER},
+      env = #{env,jdbcType=VARCHAR},
+      host_id = #{hostId,jdbcType=BIGINT},
+      host_ip = #{hostIp,jdbcType=VARCHAR},
+      running_version = #{runningVersion,jdbcType=VARCHAR},
+      app_file_update_time = #{appFileUpdateTime,jdbcType=TIMESTAMP},
+      synchronize_status = #{synchronizeStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+</mapper>
